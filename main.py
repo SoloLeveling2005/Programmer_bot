@@ -64,41 +64,39 @@ async def setting(ctx):
     global discord_id
     discord_id = get_chanel_id(ctx)
 
-    def start():
-        # async def start_timer(idd):
-        while True:
-            now = start_time()
-            if now == "12:17:40" or now == "12:17:50":
-                print(discord_id)
-                await clear(ctx, amount=10)
-                datas = start_request()
-                try:
-                    for data in datas:
-                        @client.event
-                        async def print_emb():
-                            print(discord_id)
-                            title = data[0]
-                            url_title = "https://habr.com" + str(data[1])
-                            url_image = data[2]
-                            description = data[3]
-                            emb = discord.Embed(title=title, color=discord.Color.green(),
-                                                url=url_title)
-                            # emb.set_author(name=client.user.name, icon_url=client.user.avatar_url)
-                            emb.set_thumbnail(
-                                url=url_image)
-                            emb.add_field(name=data[0], value=description)
-                            channel = client.get_channel(discord_id)
-                            await channel.send(embed=emb)
 
-                        await print_emb()
-                except:
-                    continue
-            else:
-                print(now)
+    while True:
+        now = start_time()
+        if now == "12:17:40" or now == "12:17:50":
+            print(discord_id)
+            await clear(ctx, amount=10)
+            datas = start_request()
+            try:
+                for data in datas:
+                    @client.event
+                    async def print_emb():
+                        print(discord_id)
+                        title = data[0]
+                        url_title = "https://habr.com" + str(data[1])
+                        url_image = data[2]
+                        description = data[3]
+                        emb = discord.Embed(title=title, color=discord.Color.green(),
+                                            url=url_title)
+                        # emb.set_author(name=client.user.name, icon_url=client.user.avatar_url)
+                        emb.set_thumbnail(
+                            url=url_image)
+                        emb.add_field(name=data[0], value=description)
+                        channel = client.get_channel(discord_id)
+                        await channel.send(embed=emb)
 
-            time.sleep(1)
+                    await print_emb()
+            except:
+                continue
+        else:
+            print(now)
 
-    Thread(target=start, args=(ctx,))
+        time.sleep(1)
+
 
 
 #
